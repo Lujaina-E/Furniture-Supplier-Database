@@ -8,6 +8,11 @@ The user will first enter the size of their room, and then follow the series of 
 # Challenges
 Since this is a work in progress, there are many challenges. They are already commented on in the code specific to where they exist, so I will not repreat them here. 
 
+# What I Learned
+
+{ Since I'm still working on the project, I'll add stuff here as I go... }
+I've become much more comfortable using ArrayLists now that I've had to retrieve all sorts of properties and information through OOP using Arraylists. 
+
 <hr>
 
 # Features for the Future
