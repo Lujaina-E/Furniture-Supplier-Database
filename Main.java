@@ -11,6 +11,7 @@ public class Main {
 
         int inventory = 0;
         String continue1 = "";
+        double furnishedBaseArea = 0;
 
         //creates objects (3 of each type)
         Chair ottoman = new Chair("Ottoman chair", 1.5, "velvet", 20, "Belgium");
@@ -25,6 +26,8 @@ public class Main {
         Rug woolRug = new Rug("natural wool rug", 3.5, 2, "wool", 45, "Australia");
         Rug sheepskin = new Rug("sheepskin rug", 2, 2, "sheepskin", 50, "New Zealand");
         Rug fauxFur = new Rug("faux fur rug", 4, 3, "faux fur", 38, "United Kingdom");
+        
+        
 
         ArrayList<Chair> chairs = new ArrayList<>();
         chairs.add(ottoman);
@@ -46,7 +49,8 @@ public class Main {
         couches.add(divan);
         couches.add(chaiseLounge);
 
-        //new ArrayList necessary?
+        //new ArrayList necessary to retrive items for sorts? this arraylist, the one that isnt
+        //a class and is instead a superclass, doesn't calculate the properties of each individual class
         ArrayList<Object> allObjects = new ArrayList<>();
         allObjects.add(ottoman);
         allObjects.add(pouf);
@@ -62,7 +66,7 @@ public class Main {
         allObjects.add(chaiseLounge);
 
         //adding everything bought to this arraylist
-        ArrayList<Object> totalItems = new ArrayList<>();
+        var totalItems = new ArrayList<Object>();
 
         System.out.println("Welcome to the home renovation calculator.");
         System.out.println();
@@ -151,8 +155,10 @@ public class Main {
                 System.out.println("Would you like to purchase this item? (y/n)");
                 String purchase = wordscan.nextLine();
                 if (purchase.equalsIgnoreCase("y")) {
+                    System.out.println("Please enter the style name to confirm the purchase.");
+                    String confirm = wordscan.nextLine();
                     inventory++;
-                    //add the item to the titalItems arraylist
+                    totalItems.add(confirm); //check to make sure this works
                     switch (inven) {
                         case 1:
                             totalItems.add(chairs.get(choice - 1).getName());
@@ -176,12 +182,22 @@ public class Main {
                 } else if (purchase.equalsIgnoreCase("n")) {
                     System.out.println("That's okay");
                 }
-
-                //->  if base area of all the items exceeds the room size
-                for (int i = 0; i < totalItems.size(); i++) {
-                    // ...how to add base area of all the purchased items TODO
+                
+                for(Chair item: chairs){
+                    furnishedBaseArea = furnishedBaseArea + item.getBaseArea();
+                }for(Rug item: rugs){
+                    furnishedBaseArea = furnishedBaseArea + item.getBaseArea();
+                }for(Table item: tables){
+                    furnishedBaseArea = furnishedBaseArea + item.getBaseArea();
+                }for(Couch item: couches){
+                    furnishedBaseArea = furnishedBaseArea + item.getBaseArea();
                 }
-
+                
+                if (furnishedBaseArea > roomSize){
+                    System.out.println("WARNING! You now have more items than space in your room.");
+                    System.out.println("Please proceed to checkout.");
+                    
+                }
                 System.out.println("You may not have enough space for everything. Please proceed to checkout.");//see if we can automatically jump to checkout
 
                 System.out.println("Please enter 'done' if you would like to see your total shopping list and checkout.");
@@ -192,9 +208,34 @@ public class Main {
                 }
             }//end while
 
-            //feature to add: uses binary search alogirthm for items and says its properties
-            
-            //feature to add: use bubbleSort method to sort all items by price or alphabetical name
+            //feature to add: uses binary search alogirthm for items and says its properties. use iterative algorithms TODO
+            System.out.println("What style of item would you like to search for?");
+            String styleSearch = wordscan.nextLine();
+            if (styleSearch.equals(ottoman.getName()) || styleSearch.equals(pouf.getName()) || styleSearch.equals(armchair.getName())) {
+                //print out the properties
+                if (styleSearch.equals(ottoman.getName())) {
+                    //print ottoman properties
+                } else if (styleSearch.equals(pouf.getName())) {
+                    //print out pouf properties
+                } else {
+                    //print armchair properties
+                }
+            }
+            System.out.println("Properties of " + styleSearch.getName());
+
+            //feature to add: use bubbleSort method to sort all items by price or alphabetical name TODO
+            System.out.println("Please press 1 if you would like to sort alphabetically or");
+            System.out.println(" 2 if you want to sort by price");
+            int sort = numscan.nextInt();
+            if (sort == 1) {
+                //sort alphabetically
+            } else if (sort == 2) {
+
+                //sort by price- lowest to highest
+            } else {
+                System.out.println("Sorry I am unable to analyze your answer.");
+            }
+
         }//end if
 
         //checkout 
@@ -251,22 +292,21 @@ public class Main {
         //when target is not present
         return -1;
     }//end method
-    
-    
+
     //bubbleSort for String array
-        public static void bubbleSort(String[] array) {
+    public static void bubbleSort(ArrayList<String> array) {
         String hold;
         boolean x = false;
 
         while (x == false) {
             x = true;
-            for (int i = 0; i < (array.length - 1); i++) {
-                if (array[i].compareToIgnoreCase(array[i + 1]) > 0) { //means that first one comes first
+            for (int i = 0; i < (array.size() - 1); i++) {
+                if (array.get(i).compareToIgnoreCase(array.get(i + 1)) > 0) { //means that first one comes first
 
-                    hold = array[i + 1];
+                    hold = array.get(i + 1);
 
-                    array[i + 1] = array[i];
-                    array[i] = hold;
+                    array.set(i + 1, array.get(i));
+                    array.set(i, hold);
                     x = false;
                 }
             }
@@ -285,3 +325,12 @@ public class Main {
 //whenever they want to see their list, tell them the things they have chosen. 
 //difficult!! Make an option to clear their current shopping list. TODO
 //asks them first how big the room they are revamping is, and keeps track of the size and whether they have chosen too many items for it
+
+//main problems:
+//1. inverting sortb and search alogorithms
+//2. filling the empty aray and being able to recall objects AND THEIR PROPERTIES from it , was a problem because methods aren't defined for ALL java objects, even if they were defined for the objects at hand
+//3. retrieivng total item properties at the end [see receipt] and see the problem above
+
+
+//todo: fix binary search algorithms and implement both search and sort algorithms successfully, display price and name from 
+//total items filled arrayList as a receipt at the end of purchase
