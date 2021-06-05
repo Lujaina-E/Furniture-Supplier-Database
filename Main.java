@@ -250,8 +250,8 @@ public class Main {
         }//end checkout
     }//end main
 
-    //array of ints
-    public static int binarySearch(int values[], int len, int target) {
+
+    public static int binarySearch(int values[], int len, int target) { //int array
         int max = len - 1;
         int min = 0;
         int guess;
@@ -272,8 +272,8 @@ public class Main {
         return -1;
     }//end method
 
-    //array of Strings
-    public static int binarySearch(String values[], int len, String target) { //binary search method insert
+    public static int binarySearch(String values[], int len, String target) {     //array of Strings
+
         int max = len - 1;
         int min = 0;
         int guess;
