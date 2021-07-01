@@ -16,4 +16,5 @@ I've become much more comfortable using ArrayLists now that I've had to retrieve
 <hr>
 
 # Features for the Future
-A memory clear system allowing the customer to clear their current count of items and start over (similar to the "clear cart" function on a website)
+- A memory clear system allowing the customer to clear their current count of items and start over (similar to the "clear cart" function on a website)
+- Implementation of bubble sort algorithm
